@@ -1,9 +1,10 @@
+const cardArea = document.createElement("section");
+cardArea.setAttribute("id", "cardArea");
+document.body.append(cardArea);
+
 //You can edit ALL of the code here
 function setup() {
-  const allEpisodes = getAllEpisodes();
-  //makePageForEpisodes(allEpisodes);
   createTemplate();
-  //generateOneCard();
   generateAllCards(getAllEpisodes());
 }
 
@@ -39,43 +40,28 @@ function createTemplate() {
   document.body.append(cardTemplate);
 }
 
-/* function generateOneCard() {
-  const oneEpisode = getOneEpisode();
-  const episodeCode = `S${oneEpisode.season.toString().padStart(2, "0")}E${oneEpisode.number.toString().padStart(2, "0")}`;
+function generateOneCard(episode) {
+  const episodeCode = `S${episode.season.toString().padStart(2, "0")}E${episode.number.toString().padStart(2, "0")}`;
 
   const card = document.querySelector("template").content.cloneNode(true);
 
   const titleCard = card.querySelector(".titleEpisode");
-  titleCard.innerText = `${oneEpisode.name} - ${episodeCode}`;
+  titleCard.innerText = `${episode.name} - ${episodeCode}`;
 
   const imgCard = card.querySelector(".imgEpisode");
-  imgCard.setAttribute("src", oneEpisode.image.medium);
+  imgCard.setAttribute("src", episode.image.medium);
 
   const summaryCard = card.querySelector(".summaryEpisode");
-  summaryCard.innerHTML = oneEpisode.summary;
+  summaryCard.innerHTML = episode.summary;
 
-  document.body.prepend(card);
-} */
+  const linkCard = document.createElement("a");
+  linkCard.setAttribute("href", episode.url);
+
+  summaryCard.after(linkCard);
+
+  cardArea.append(card);
+}
 
 function generateAllCards(allEpisodes) {
-  const cardArea = document.createElement("section");
-  cardArea.setAttribute("id", "cardArea");
-  document.body.append(cardArea);
-  for (const episode of allEpisodes) {
-    //console.log(episode);
-    const episodeCode = `S${episode.season.toString().padStart(2, "0")}E${episode.number.toString().padStart(2, "0")}`;
-
-    const card = document.querySelector("template").content.cloneNode(true);
-
-    const titleCard = card.querySelector(".titleEpisode");
-    titleCard.innerText = `${episode.name} - ${episodeCode}`;
-
-    const imgCard = card.querySelector(".imgEpisode");
-    imgCard.setAttribute("src", episode.image.medium);
-
-    const summaryCard = card.querySelector(".summaryEpisode");
-    summaryCard.innerHTML = episode.summary;
-
-    cardArea.append(card);
-  }
+  allEpisodes.map((episode) => generateOneCard(episode));
 }
