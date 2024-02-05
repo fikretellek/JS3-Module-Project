@@ -3,6 +3,7 @@ function setup() {
   const allEpisodes = getAllEpisodes();
   makePageForEpisodes(allEpisodes);
   createTemplate();
+  generateOneCard();
 }
 
 function makePageForEpisodes(episodeList) {
@@ -13,8 +14,14 @@ function makePageForEpisodes(episodeList) {
 window.onload = setup;
 
 function createTemplate() {
-  const cardEpisode = document.createElement("template");
+  const cardTemplate = document.createElement("template");
+  cardTemplate.setAttribute("class", "cardTemplate");
+
+  const cardEpisode = document.createElement("section");
   cardEpisode.setAttribute("class", "cardEpisode");
+
+  const titleEpisode = document.createElement("h1");
+  titleEpisode.setAttribute("class", "titleEpisode");
 
   const contImage = document.createElement("div");
   contImage.setAttribute("class", "contImage");
@@ -22,13 +29,30 @@ function createTemplate() {
   const imgEpisode = document.createElement("img");
   imgEpisode.setAttribute("class", "imgEpisode");
 
-  const titleEpisode = document.createElement("h1");
-  titleEpisode.setAttribute("class", "titleEpisode");
-
   const summaryEpisode = document.createElement("p");
   summaryEpisode.setAttribute("class", "summaryEpisode");
 
   contImage.append(imgEpisode);
-  cardEpisode.append(contImage, titleEpisode, summaryEpisode);
-  document.body.append(cardEpisode);
+  cardEpisode.append(titleEpisode, contImage, summaryEpisode);
+  cardTemplate.content.append(cardEpisode);
+  document.body.append(cardTemplate);
+}
+
+function generateOneCard() {
+  const oneEpisode = getOneEpisode();
+  console.log(oneEpisode.season);
+  const episodeCode = `S${oneEpisode.season.toString().padStart(2, "0")}E${oneEpisode.number.toString().padStart(2, "0")}`;
+
+  const card = document.querySelector("template").content.cloneNode(true);
+
+  const titleCard = card.querySelector(".titleEpisode");
+  titleCard.innerText = `${oneEpisode.name} - ${episodeCode}`;
+
+  const imgCard = card.querySelector(".imgEpisode");
+  imgCard.setAttribute("src", oneEpisode.image.medium);
+
+  const summaryCard = card.querySelector(".summaryEpisode");
+  summaryCard.innerHTML = oneEpisode.summary;
+
+  document.body.prepend(card);
 }
