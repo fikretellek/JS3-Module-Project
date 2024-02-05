@@ -7,7 +7,7 @@
 }
 
 body {
-  margin: 30px;
+  margin: 5vh 10vw;
 }
 
 #cardArea {
@@ -21,11 +21,23 @@ body {
 .cardEpisode {
   background-color: rgb(255, 255, 255);
   border-radius: 15px;
-  box-shadow: rgb(0, 0, 0, 0.2) 3px 3px 6px 0px, rgba(0, 0, 0, 0.03) -3px -3px 6px 1px;
+  box-shadow: rgb(0, 0, 0, 0.2) 4px 4px 8px 0px, rgba(0, 0, 0, 0.03) -4px -4px 8px 1px;
   padding: 15px;
   display: flex;
   flex-direction: column;
   gap: 15px;
+}
+
+.cardEpisode:hover {
+  background-color: rgb(250, 250, 250);
+  border-radius: 12px;
+  box-shadow: rgb(0, 0, 0, 0.4) 1px 1px 2px 0px, rgba(0, 0, 0, 0.06) -1px -1px 2px 1px;
+
+  .titleEpisode {
+    border-radius: 14px;
+    box-shadow: rgb(0, 0, 0, 0.4) 1px 1px 2px 0px inset, rgba(0, 0, 0, 0.06) -1px -1px 2px 1px inset;
+    background-color: rgb(245, 245, 245);
+  }
 }
 
 .contImage {
