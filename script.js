@@ -1,15 +1,16 @@
 //You can edit ALL of the code here
 function setup() {
   const allEpisodes = getAllEpisodes();
-  makePageForEpisodes(allEpisodes);
+  //makePageForEpisodes(allEpisodes);
   createTemplate();
-  generateOneCard();
+  //generateOneCard();
+  generateAllCards(getAllEpisodes());
 }
 
-function makePageForEpisodes(episodeList) {
+/* function makePageForEpisodes(episodeList) {
   const rootElem = document.getElementById("root");
   rootElem.textContent = `Got ${episodeList.length} episode(s)`;
-}
+} */
 
 window.onload = setup;
 
@@ -38,9 +39,8 @@ function createTemplate() {
   document.body.append(cardTemplate);
 }
 
-function generateOneCard() {
+/* function generateOneCard() {
   const oneEpisode = getOneEpisode();
-  console.log(oneEpisode.season);
   const episodeCode = `S${oneEpisode.season.toString().padStart(2, "0")}E${oneEpisode.number.toString().padStart(2, "0")}`;
 
   const card = document.querySelector("template").content.cloneNode(true);
@@ -55,4 +55,27 @@ function generateOneCard() {
   summaryCard.innerHTML = oneEpisode.summary;
 
   document.body.prepend(card);
+} */
+
+function generateAllCards(allEpisodes) {
+  const cardArea = document.createElement("section");
+  cardArea.setAttribute("id", "cardArea");
+  document.body.append(cardArea);
+  for (const episode of allEpisodes) {
+    //console.log(episode);
+    const episodeCode = `S${episode.season.toString().padStart(2, "0")}E${episode.number.toString().padStart(2, "0")}`;
+
+    const card = document.querySelector("template").content.cloneNode(true);
+
+    const titleCard = card.querySelector(".titleEpisode");
+    titleCard.innerText = `${episode.name} - ${episodeCode}`;
+
+    const imgCard = card.querySelector(".imgEpisode");
+    imgCard.setAttribute("src", episode.image.medium);
+
+    const summaryCard = card.querySelector(".summaryEpisode");
+    summaryCard.innerHTML = episode.summary;
+
+    cardArea.append(card);
+  }
 }
