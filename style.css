@@ -1,36 +1,55 @@
 #root {
   color: red;
 }
-*{
+* {
   margin: 0px;
   padding: 0px;
 }
 
-.cardEpisode{
-  background-color: blue;
-  width: 400px;
-  height: 400px;
-  padding: 25px;
-
+body {
+  margin: 30px;
 }
 
-.contImage{
-  background-color: black;
-width: 400px;
-height: 300px;
+#cardArea {
+  border-radius: 20px;
+  background-color: rgb(245, 245, 245);
+  padding: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+.cardEpisode {
+  background-color: rgb(255, 255, 255);
+  border-radius: 15px;
+  box-shadow: rgb(0, 0, 0, 0.2) 3px 3px 6px 0px, rgba(0, 0, 0, 0.03) -3px -3px 6px 1px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-.imgEpisode{
+.contImage {
+  background-color: rgb(0, 0, 0);
+  border-radius: 15px;
+}
+
+.imgEpisode {
+  object-fit: cover;
+  border-radius: 15px;
   height: 100%;
   width: 100%;
-  object-fit: contain;
-
 }
 
-.titleEpisode{
-display: block;
+.titleEpisode {
+  padding: 25px 10px;
+  box-shadow: rgb(0, 0, 0, 0.2) 3px 3px 6px 0px inset, rgba(0, 0, 0, 0.03) -3px -3px 6px 1px inset;
+  border-radius: 15px;
+  text-align: center;
+  background-color: rgb(245, 245, 245);
+  color: rgb(80, 80, 80);
 }
 
-.summaryEpisode{
-display: block;
+.summaryEpisode {
+  display: block;
+  color: rgb(80, 80, 80);
 }
