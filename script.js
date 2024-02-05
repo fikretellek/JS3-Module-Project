@@ -65,3 +65,12 @@ function generateOneCard(episode) {
 function generateAllCards(allEpisodes) {
   allEpisodes.map((episode) => generateOneCard(episode));
 }
+
+cardArea.addEventListener("click", (event) => {
+  const target = event.target.closest(".cardEpisode");
+
+  if (target) {
+    const link = target.querySelector("a");
+    window.open(link.getAttribute("href"), "_blank");
+  }
+});
