@@ -1,3 +1,36 @@
 #root {
   color: red;
 }
+*{
+  margin: 0px;
+  padding: 0px;
+}
+
+.cardEpisode{
+  background-color: blue;
+  width: 400px;
+  height: 400px;
+  padding: 25px;
+
+}
+
+.contImage{
+  background-color: black;
+width: 400px;
+height: 300px;
+}
+
+.imgEpisode{
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+
+}
+
+.titleEpisode{
+display: block;
+}
+
+.summaryEpisode{
+display: block;
+}
