@@ -4,7 +4,6 @@ document.body.append(cardArea);
 
 //You can edit ALL of the code here
 function setup() {
-  createTemplate();
   generateAllCards(getAllEpisodes());
 }
 
@@ -46,7 +45,7 @@ function generateOneCard(episode) {
   const card = document.querySelector("template").content.cloneNode(true);
 
   const titleCard = card.querySelector(".titleEpisode");
-  titleCard.innerText = `${episode.name} - ${episodeCode}`;
+  titleCard.innerText = `${episode.name}\n - ${episodeCode}`;
 
   const imgCard = card.querySelector(".imgEpisode");
   imgCard.setAttribute("src", episode.image.medium);
@@ -63,6 +62,7 @@ function generateOneCard(episode) {
 }
 
 function generateAllCards(allEpisodes) {
+  createTemplate();
   allEpisodes.map((episode) => generateOneCard(episode));
 }
 
