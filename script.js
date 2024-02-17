@@ -40,7 +40,9 @@ function createTemplate() {
 }
 
 function generateOneCard(episode) {
-  const episodeCode = `S${episode.season.toString().padStart(2, "0")}E${episode.number.toString().padStart(2, "0")}`;
+  const episodeCode = `S${episode.season
+    .toString()
+    .padStart(2, "0")}E${episode.number.toString().padStart(2, "0")}`;
 
   const card = document.querySelector("template").content.cloneNode(true);
 
@@ -74,3 +76,73 @@ cardArea.addEventListener("click", (event) => {
     window.open(link.getAttribute("href"), "_blank");
   }
 });
+
+const searchInput = document.createElement("input");
+searchInput.setAttribute("type", "text");
+searchInput.setAttribute("placeholder", "Search episodes...");
+searchInput.setAttribute("id", "searchInput");
+searchInput.addEventListener("input", handleSearch);
+document.body.insertBefore(searchInput, document.getElementById("cardArea"));
+
+function handleSearch(event) {
+  const searchTerm = event.target.value.trim().toLowerCase();
+  const episodes = document.querySelectorAll(".cardEpisode");
+  let matchingEpisodes = 0;
+
+  episodes.forEach((episode) => {
+    const title = episode
+      .querySelector(".titleEpisode")
+      .innerText.toLowerCase();
+    const summary = episode
+      .querySelector(".summaryEpisode")
+      .innerText.toLowerCase();
+    if (title.includes(searchTerm) || summary.includes(searchTerm)) {
+      episode.style.display = "block";
+      matchingEpisodes++;
+    } else {
+      episode.style.display = "none";
+    }
+  });
+
+  const countInfo = document.getElementById("countInfo");
+  if (countInfo) {
+    countInfo.innerText = `Displaying ${matchingEpisodes} episode(s)`;
+  } else {
+    const countDiv = document.createElement("div");
+    countDiv.setAttribute("id", "countInfo");
+    countDiv.innerText = `Displaying ${matchingEpisodes} episode(s)`;
+    document.body.insertBefore(countDiv, searchInput.nextSibling);
+  }
+}
+
+function createEpisodeSelector(allEpisodes) {
+  const select = document.createElement("select");
+  select.setAttribute("id", "episodeSelector");
+
+  allEpisodes.forEach((episode, index) => {
+    const option = document.createElement("option");
+    const episodeCode = `S${episode.season
+      .toString()
+      .padStart(2, "0")}E${episode.number.toString().padStart(2, "0")}`;
+    option.value = index;
+    option.textContent = `${episodeCode} - ${episode.name}`;
+    select.appendChild(option);
+  });
+
+  select.addEventListener("change", (event) => {
+    const selectedIndex = event.target.value;
+    const episodes = document.querySelectorAll(".cardEpisode");
+
+    episodes.forEach((episode, index) => {
+      if (index == selectedIndex) {
+        episode.style.display = "block";
+      } else {
+        episode.style.display = "none";
+      }
+    });
+  });
+
+  document.body.insertBefore(select, searchInput.nextSibling);
+}
+
+createEpisodeSelector(getAllEpisodes());
