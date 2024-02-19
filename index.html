@@ -9,12 +9,29 @@
   </head>
 
   <body>
+    <header>
+      <select name="episodeSelector" id="episodeSelector">
+        <option value="default">All Episodes</option>
+        <option value="select" hidden>Choose An Episode</option>
+      </select>
+      <div id="filterArea">
+        <input type="text" placeholder="Search episodes..." id="q" />
+        <p id="countInfo">test</p>
+      </div>
+    </header>
+
+    <main>
+      <section id="cardArea"></section>
+    </main>
+
+    <footer></footer>
+
     <div id="root"></div>
 
     <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
     <script src="episodes.js"></script>
 
     <!-- Loads YOUR javascript code -->
-    <script src="script.js"></script>
+    <script defer src="script.js"></script>
   </body>
 </html>
