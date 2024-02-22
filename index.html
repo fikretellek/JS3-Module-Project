@@ -3,39 +3,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TV Show Project | Fikret Ellek (fikretellek) - Pedram Amani (pedram-am)</title>
+    <title>TV Show Project</title>
     <link href="style.css" rel="stylesheet" />
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
-      rel="stylesheet"
-    />
   </head>
-
   <body>
     <header>
-      <h2 id="titleLogo">tv show project</h2>
-      <select name="episodeSelector" id="episodeSelector">
-        <option value="default">All Episodes</option>
-        <option value="select" hidden>Choose An Episode</option>
+      <h1>TV Show Project</h1>
+      <select name="showSelector" id="showSelector">
+        <option value="default">Select a Show</option>
       </select>
-      <div id="filterArea">
-        <input type="text" placeholder="Search episodes..." id="q" />
-        <p id="countInfo">test</p>
-      </div>
+      <input type="text" placeholder="Search episodes..." id="q" />
     </header>
-
     <main>
       <section id="cardArea"></section>
     </main>
-
-    <footer></footer>
-
-    <div id="root"></div>
-
-    <!-- Loads YOUR javascript code -->
     <script defer src="script.js"></script>
   </body>
 </html>
