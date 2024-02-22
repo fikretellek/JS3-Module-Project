@@ -2,7 +2,6 @@ async function getFetch() {
   fetch("https://api.tvmaze.com/shows/82/episodes")
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
       loadPage(data);
     })
     .catch((err) => console.log(err));
@@ -15,7 +14,6 @@ function loadPage(data) {
   const filterArea = document.getElementById("filterArea");
   const searchInput = document.querySelector("#q");
   let currentEpisodes = [...myEpisodes];
-  console.log("2");
   const countInfo = document.getElementById("countInfo");
   const select = document.querySelector("#episodeSelector");
   const allEpisodesButton = document.createElement("button");
