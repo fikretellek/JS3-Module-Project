@@ -1,164 +1,186 @@
-async function getFetch() {
-  fetch("https://api.tvmaze.com/shows/82/episodes")
+const cardArea = document.getElementById("cardArea");
+const select = document.querySelector("#episodeSelector");
+const allEpisodesButton = document.getElementById("allEpisodesButton");
+allEpisodesButton.style.display = "none";
+const searchInput = document.querySelector("#q");
+
+function getShowsFetch() {
+  fetch("https://api.tvmaze.com/shows ")
     .then((response) => response.json())
     .then((data) => {
-      loadPage(data);
+      generateShowOptions(sortShowsByName(data));
+    });
+}
+getShowsFetch();
+
+function getFetch(showNumber) {
+  fetch(`https://api.tvmaze.com/shows/${showNumber}/episodes`)
+    .then((response) => response.json())
+    .then((data) => {
+      updateAllEpisodeCount(data);
+      createEpisodeSelector(data);
+      generateAllCards(data);
+      searchInput.addEventListener("input", () => searchEvent(data));
+      select.addEventListener("change", () => selectEpisodeEvent(data));
+      allEpisodesButton.addEventListener("click", () => backToAllEpisodes(data));
     })
     .catch((err) => console.log(err));
 }
-getFetch();
 
-function loadPage(data) {
-  let myEpisodes = data;
-  const cardArea = document.getElementById("cardArea");
-  const filterArea = document.getElementById("filterArea");
-  const searchInput = document.querySelector("#q");
-  let currentEpisodes = [...myEpisodes];
-  const countInfo = document.getElementById("countInfo");
-  const select = document.querySelector("#episodeSelector");
-  const allEpisodesButton = document.createElement("button");
+function sortShowsByName(shows) {
+  return shows.sort((a, b) => {
+    if (a.name.toLowerCase() > b.name.toLowerCase()) {
+      return 1;
+    } else if (a.name.toLowerCase() < b.name.toLowerCase()) {
+      return -1;
+    }
+    return 0;
+  });
+}
 
-  //You can edit ALL of the code here
-  function setup() {
-    createTemplate();
-    createEpisodeSelector(currentEpisodes);
-    generateAllCards(currentEpisodes);
-  }
+function generateShowOptions(shows) {
+  shows.map((show) => {
+    const showOption = document.createElement("option");
+    showOption.innerText = show.name;
+    showOption.value = show.id;
+    document.getElementById("showSelector").append(showOption);
+  });
+}
 
-  /* function makePageForEpisodes(episodeList) {
-    const rootElem = document.getElementById("root");
-    rootElem.textContent = `Got ${episodeList.length} episode(s)`;
-  } */
+document.querySelector("#showSelector").addEventListener("change", (e) => {
+  const episodeId = document.querySelector("#showSelector").value;
+  getFetch(episodeId);
+});
 
-  setup();
+function createTemplate() {
+  const cardTemplate = document.createElement("template");
+  cardTemplate.setAttribute("class", "cardTemplate");
 
-  function createTemplate() {
-    const cardTemplate = document.createElement("template");
-    cardTemplate.setAttribute("class", "cardTemplate");
+  const cardEpisode = document.createElement("div");
+  cardEpisode.setAttribute("class", "cardEpisode");
 
-    const cardEpisode = document.createElement("div");
-    cardEpisode.setAttribute("class", "cardEpisode");
+  const titleEpisode = document.createElement("h1");
+  titleEpisode.setAttribute("class", "titleEpisode");
 
-    const titleEpisode = document.createElement("h1");
-    titleEpisode.setAttribute("class", "titleEpisode");
+  const contImage = document.createElement("div");
+  contImage.setAttribute("class", "contImage");
 
-    const contImage = document.createElement("div");
-    contImage.setAttribute("class", "contImage");
+  const imgEpisode = document.createElement("img");
+  imgEpisode.setAttribute("class", "imgEpisode");
 
-    const imgEpisode = document.createElement("img");
-    imgEpisode.setAttribute("class", "imgEpisode");
+  const summaryEpisode = document.createElement("p");
+  summaryEpisode.setAttribute("class", "summaryEpisode");
 
-    const summaryEpisode = document.createElement("p");
-    summaryEpisode.setAttribute("class", "summaryEpisode");
+  contImage.append(imgEpisode);
+  cardEpisode.append(titleEpisode, contImage, summaryEpisode);
+  cardTemplate.content.append(cardEpisode);
+  document.body.append(cardTemplate);
+}
+createTemplate();
 
-    contImage.append(imgEpisode);
-    cardEpisode.append(titleEpisode, contImage, summaryEpisode);
-    cardTemplate.content.append(cardEpisode);
-    document.body.append(cardTemplate);
-  }
+function generateEpisodeCode(episode) {
+  return `S${episode.season.toString().padStart(2, "0")}E${episode.number.toString().padStart(2, "0")}`;
+}
 
-  function generateEpisodeCode(episode) {
-    return `S${episode.season.toString().padStart(2, "0")}E${episode.number.toString().padStart(2, "0")}`;
-  }
+function generateOneCard(episode) {
+  const episodeCode = generateEpisodeCode(episode);
 
-  function generateOneCard(episode) {
+  const card = document.querySelector("template").content.cloneNode(true);
+
+  const titleCard = card.querySelector(".titleEpisode");
+  titleCard.innerText = `${episode.name}\n - ${episodeCode}`;
+
+  const imgCard = card.querySelector(".imgEpisode");
+  //why is this not working ????? imgCard.setAttribute("src", episode.image.medium ?? empty);
+  // this doesnt work either
+  // if (episode.image.medium) {
+  //   imgCard.setAttribute("src", episode.image.medium ? episode.image.medium : "");
+  // }
+  const imageSrc = episode.image && episode.image.medium ? episode.image.medium : "";
+  const imageAlt = episode.name || "Episode Image";
+  imgCard.setAttribute("src", imageSrc);
+  imgCard.setAttribute("alt", imageAlt);
+
+  const summaryCard = card.querySelector(".summaryEpisode");
+  summaryCard.innerHTML = episode.summary;
+
+  const linkCard = document.createElement("a");
+  linkCard.setAttribute("href", episode.url);
+
+  summaryCard.after(linkCard);
+
+  cardArea.append(card);
+}
+
+function createEpisodeSelector(allEpisodes) {
+  allEpisodes.forEach((episode) => {
+    const option = document.createElement("option");
     const episodeCode = generateEpisodeCode(episode);
-
-    const card = document.querySelector("template").content.cloneNode(true);
-
-    const titleCard = card.querySelector(".titleEpisode");
-    titleCard.innerText = `${episode.name}\n - ${episodeCode}`;
-
-    const imgCard = card.querySelector(".imgEpisode");
-    imgCard.setAttribute("src", episode.image.medium);
-
-    const summaryCard = card.querySelector(".summaryEpisode");
-    summaryCard.innerHTML = episode.summary;
-
-    const linkCard = document.createElement("a");
-    linkCard.setAttribute("href", episode.url);
-
-    summaryCard.after(linkCard);
-
-    cardArea.append(card);
-  }
-
-  function createEpisodeSelector(allEpisodes) {
-    allEpisodes.forEach((episode) => {
-      const option = document.createElement("option");
-      const episodeCode = generateEpisodeCode(episode);
-      option.value = episode.id;
-      option.textContent = `${episodeCode} - ${episode.name}`;
-      select.appendChild(option);
-    });
-  }
-
-  function updateDisplayCount(allEpisodes) {
-    countInfo.innerText = `Displaying ${allEpisodes.length}/${myEpisodes.length} episodes`;
-  }
-
-  function generateAllCards(allEpisodes) {
-    cardArea.innerHTML = "";
-    createTemplate();
-    allEpisodes.map((episode) => generateOneCard(episode));
-    updateDisplayCount(allEpisodes);
-  }
-
-  function modifyAllEpisodesButton() {
-    if (document.querySelector("#allEpisodesButton")) {
-      document.querySelector("#allEpisodesButton").parentNode.removeChild(document.querySelector("#allEpisodesButton"));
-    }
-    if (select.value != "default" || searchInput.value) {
-      allEpisodesButton.id = "allEpisodesButton";
-      allEpisodesButton.innerText = "← All episodes";
-      document.querySelector("header").append(allEpisodesButton);
-    }
-  }
-
-  function backToAllEpisodes() {
-    select.value = "default";
-    searchInput.value = "";
-    document.querySelector("#allEpisodesButton").parentNode.removeChild(document.querySelector("#allEpisodesButton"));
-    currentEpisodes = [...myEpisodes];
-    generateAllCards(currentEpisodes);
-  }
-
-  // link to episode page eventListener
-  cardArea.addEventListener("click", (event) => {
-    const target = event.target.closest(".cardEpisode");
-
-    if (target) {
-      const link = target.querySelector("a");
-      window.open(link.getAttribute("href"), "_blank");
-    }
+    option.value = episode.id;
+    option.textContent = `${episodeCode} - ${episode.name}`;
+    select.appendChild(option);
   });
+}
 
-  // search eventListener
-  searchInput.addEventListener("input", () => {
-    select.value = "default";
-    const searchTerm = searchInput.value.trim().toLowerCase();
-    currentEpisodes = myEpisodes.filter(
-      (episode) => episode.name.toLowerCase().includes(searchTerm) || episode.summary.toLowerCase().includes(searchTerm)
-    );
-    if (searchInput.value) {
-      select.value = "select";
-    }
-    generateAllCards(currentEpisodes);
-    modifyAllEpisodesButton();
-  });
+function generateAllCards(currentEpisodes) {
+  cardArea.innerHTML = "";
+  createTemplate();
+  currentEpisodes.map((episode) => generateOneCard(episode));
+  updateCurrentEpisodeCount(currentEpisodes);
+}
 
-  // dropdown menu eventListener
-  select.addEventListener("change", () => {
-    searchInput.value = "";
-    if (select.value === "default") {
-      currentEpisodes = [...myEpisodes];
-    } else {
-      currentEpisodes = myEpisodes.filter((episode) => episode.id === parseInt(select.value));
-    }
-    generateAllCards(currentEpisodes);
-    modifyAllEpisodesButton();
-  });
+function updateCurrentEpisodeCount(shows) {
+  document.getElementById("currentEpisodesCount").innerText = shows.length;
+}
 
-  // all episodes button eventListener
-  allEpisodesButton.addEventListener("click", backToAllEpisodes);
+function updateAllEpisodeCount(shows) {
+  document.getElementById("allEpisodesCount").innerText = shows.length;
+}
+
+function modifyAllEpisodesButton() {
+  if (select.value != "default" || searchInput.value) {
+    allEpisodesButton.style.display = "block";
+  } else if (select.value === "default" || !searchInput.value) {
+    allEpisodesButton.style.display = "none";
+  }
+}
+
+function backToAllEpisodes(allEpisodes) {
+  select.value = "default";
+  searchInput.value = "";
+  allEpisodesButton.style.display = "none";
+  generateAllCards(allEpisodes);
+}
+
+cardArea.addEventListener("click", (event) => {
+  const target = event.target.closest(".cardEpisode");
+
+  if (target) {
+    const link = target.querySelector("a");
+    window.open(link.getAttribute("href"), "_blank");
+  }
+});
+
+function searchEvent(shows) {
+  select.value = "default";
+  const searchTerm = searchInput.value.trim().toLowerCase();
+  let currentEpisodes = shows.filter(
+    (episode) => episode.name.toLowerCase().includes(searchTerm) || episode.summary.toLowerCase().includes(searchTerm)
+  );
+  if (searchInput.value) {
+    select.value = "select";
+  }
+  generateAllCards(currentEpisodes);
+  modifyAllEpisodesButton();
+}
+
+function selectEpisodeEvent(shows) {
+  searchInput.value = "";
+  if (select.value === "default") {
+    currentEpisodes = shows;
+  } else {
+    currentEpisodes = shows.filter((episode) => episode.id === parseInt(select.value));
+  }
+  generateAllCards(currentEpisodes);
+  modifyAllEpisodesButton();
 }
