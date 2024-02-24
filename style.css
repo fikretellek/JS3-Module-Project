@@ -44,7 +44,7 @@ select {
   gap: 10px;
   align-items: center;
 }
-#q {
+.q {
   height: 30px;
   border: none;
   padding-left: 10px;
@@ -58,18 +58,19 @@ select {
   left: calc(10vw + 30px);
   top: 45px;
 }
-#allEpisodesButton {
-  position: absolute;
-  left: calc(10vw + 30px);
-  top: 85px;
+.backButton {
   height: 30px;
   border: none;
   padding: 0px 10px 0px 60px;
 
   border-radius: 12px;
   background-color: rgb(255, 255, 255);
-  border-radius: 7px;
   box-shadow: rgb(0, 0, 0, 0.2) 4px 4px 8px 0px, rgba(0, 0, 0, 0.03) -4px -4px 8px 1px;
+}
+#allEpisodesButton {
+  position: absolute;
+  left: calc(10vw + 30px);
+  top: 85px;
 }
 
 #allEpisodesButton:hover {
@@ -78,7 +79,8 @@ select {
   box-shadow: rgb(0, 0, 0, 0.4) 1px 1px 2px 0px, rgba(0, 0, 0, 0.06) -1px -1px 2px 1px;
   cursor: pointer;
 }
-#countInfo {
+
+.countInfo {
   position: absolute;
   right: calc(10vw + 30px);
   top: 85px;
@@ -88,35 +90,76 @@ select {
 
   box-shadow: rgb(0, 0, 0, 0.4) 1px 1px 2px 0px, rgba(0, 0, 0, 0.06) -1px -1px 2px 1px;
 }
-
-#cardArea {
+main {
   border-radius: 20px;
   background-color: rgb(245, 245, 245);
   padding: 30px;
-
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(30ch, 1fr));
-  gap: 30px;
 }
-.cardEpisode {
-  background-color: rgb(255, 255, 255);
-  border-radius: 7px;
-  box-shadow: rgb(0, 0, 0, 0.2) 4px 4px 8px 0px, rgba(0, 0, 0, 0.03) -4px -4px 8px 1px;
-  padding: 15px;
+.cardShow {
+  display: flex;
+  flex-direction: row;
+  padding: 30px;
+
+  justify-content: space-between;
+}
+
+#cardAreaShow {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
-.cardEpisode:hover {
+.cardShow:hover {
+  .titleShow {
+    border-radius: 14px;
+    box-shadow: rgb(0, 0, 0, 0.4) 1px 1px 2px 0px inset, rgba(0, 0, 0, 0.06) -1px -1px 2px 1px inset;
+    background-color: rgb(245, 245, 245);
+  }
+  .imgShow {
+    border-radius: 10px;
+  }
+
+  .contShowInfo {
+    border-radius: 14px;
+    box-shadow: rgb(0, 0, 0, 0.4) 1px 1px 2px 0px inset, rgba(0, 0, 0, 0.06) -1px -1px 2px 1px inset;
+    background-color: rgb(245, 245, 245);
+  }
+}
+
+#cardArea {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(30ch, 1fr));
+  gap: 30px;
+}
+
+.card {
+  background-color: rgb(255, 255, 255);
+  border-radius: 7px;
+  box-shadow: rgb(0, 0, 0, 0.2) 4px 4px 8px 0px, rgba(0, 0, 0, 0.03) -4px -4px 8px 1px;
+  gap: 15px;
+}
+.card:hover {
   background-color: rgb(250, 250, 250);
   border-radius: 12px;
   box-shadow: rgb(0, 0, 0, 0.4) 1px 1px 2px 0px, rgba(0, 0, 0, 0.06) -1px -1px 2px 1px;
   cursor: pointer;
+}
+
+.cardEpisode {
+  padding: 15px;
+  gap: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.cardEpisode:hover {
   .titleEpisode {
     border-radius: 14px;
     box-shadow: rgb(0, 0, 0, 0.4) 1px 1px 2px 0px inset, rgba(0, 0, 0, 0.06) -1px -1px 2px 1px inset;
     background-color: rgb(245, 245, 245);
+  }
+  .imgEpisode {
+    border-radius: 10px;
   }
 
   .summaryEpisode p:hover {
@@ -125,10 +168,49 @@ select {
     display: block;
   }
 }
+.contInfo {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  height: 100%;
+  justify-content: space-between;
+}
+
+.contShow {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
 
 .contImage {
   background-color: rgb(0, 0, 0);
   border-radius: 15px;
+}
+.contImageShow {
+  background-color: rgb(0, 0, 0);
+  border-radius: 15px;
+  height: 400px;
+  width: 300px;
+}
+.contShowInfo {
+  box-shadow: rgb(0, 0, 0, 0.2) 3px 3px 6px 0px inset, rgba(0, 0, 0, 0.03) -3px -3px 6px 1px inset;
+  background-color: rgb(245, 245, 245);
+  color: rgb(80, 80, 80);
+  border-radius: 7px;
+  padding: 20px;
+}
+.summaryShow {
+  width: fit-content;
+  p {
+    width: 100%;
+  }
+}
+.imgShow {
+  object-fit: cover;
+  border-radius: 7px;
+  height: 400px;
+  width: 300px;
 }
 
 .imgEpisode {
@@ -137,17 +219,24 @@ select {
   height: 100%;
   width: 100%;
 }
-.imgEpisode:hover {
-  border-radius: 10px;
+
+.title {
+  box-shadow: rgb(0, 0, 0, 0.2) 3px 3px 6px 0px inset, rgba(0, 0, 0, 0.03) -3px -3px 6px 1px inset;
+  background-color: rgb(245, 245, 245);
+  color: rgb(80, 80, 80);
+  border-radius: 7px;
 }
+
+.titleShow {
+  font-size: large;
+  padding: 30px 20px 30px 50px;
+  text-align: left;
+}
+
 .titleEpisode {
   font-size: medium;
   padding: 25px 10px;
-  box-shadow: rgb(0, 0, 0, 0.2) 3px 3px 6px 0px inset, rgba(0, 0, 0, 0.03) -3px -3px 6px 1px inset;
-  border-radius: 7px;
   text-align: center;
-  background-color: rgb(245, 245, 245);
-  color: rgb(80, 80, 80);
 }
 
 .summaryEpisode {

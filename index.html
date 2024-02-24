@@ -26,16 +26,20 @@
         <option value="select" hidden>Choose An Episode</option>
       </select>
       <div id="filterArea">
-        <input type="text" placeholder="Search episodes..." id="q" />
-        <p id="countInfo">
+        <input type="text" placeholder="Search shows..." id="searchShows" class="q" />
+        <input type="text" placeholder="Search episodes..." id="searchEpisodes" class="q" />
+        <p id="showCountInfo" class="countInfo left">
+          Displaying <span id="currentShowsCount"></span> / <span id="allShowsCount"></span> shows
+        </p>
+        <p id="episodeCountInfo" class="countInfo">
           Displaying <span id="currentEpisodesCount"></span> / <span id="allEpisodesCount"></span> episodes
         </p>
       </div>
-      <button id="allEpisodesButton">← All episodes</button>
     </header>
 
     <main>
       <section id="cardArea"></section>
+      <section id="cardAreaShow"></section>
     </main>
 
     <footer></footer>
