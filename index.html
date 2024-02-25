@@ -17,24 +17,29 @@
   <body>
     <header>
       <h2 id="titleLogo">tv show project</h2>
-      <select name="showSelector" id="showSelector">
-        <option value="default">All Shows</option>
-        <option value="select" hidden>Choose A Show</option>
-      </select>
-      <select name="episodeSelector" id="episodeSelector">
-        <option value="default">All Episodes</option>
-        <option value="select" hidden>Choose An Episode</option>
-      </select>
-      <div id="filterArea">
-        <input type="text" placeholder="Search shows..." id="searchShows" class="q" />
-        <input type="text" placeholder="Search episodes..." id="searchEpisodes" class="q" />
-        <p id="showCountInfo" class="countInfo left">
-          Displaying <span id="currentShowsCount"></span> / <span id="allShowsCount"></span> shows
-        </p>
-        <p id="episodeCountInfo" class="countInfo">
-          Displaying <span id="currentEpisodesCount"></span> / <span id="allEpisodesCount"></span> episodes
-        </p>
+      <div id="selectShow">
+        <select name="showSelector" id="showSelector">
+          <option value="default">All Shows</option>
+          <option value="select" hidden>Choose A Show</option>
+        </select>
       </div>
+      <div id="selectEpisode">
+        <select name="episodeSelector" id="episodeSelector">
+          <option value="default">All Episodes</option>
+          <option value="select" hidden>Choose An Episode</option>
+        </select>
+        <div id="filterArea">
+          <input type="text" placeholder="Search shows..." id="searchShows" class="q" />
+          <input type="text" placeholder="Search episodes..." id="searchEpisodes" class="q" />
+        </div>
+      </div>
+
+      <p id="showCountInfo" class="countInfo left">
+        Displaying <span id="currentShowsCount"></span> / <span id="allShowsCount"></span> shows
+      </p>
+      <p id="episodeCountInfo" class="countInfo">
+        Displaying <span id="currentEpisodesCount"></span> / <span id="allEpisodesCount"></span> episodes
+      </p>
     </header>
 
     <main>

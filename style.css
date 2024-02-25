@@ -17,18 +17,27 @@ p {
 h1 {
   font-size: medium;
 }
+#selectShow {
+  display: flex;
+  gap: 15px;
+}
+#selectEpisode {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
 header {
-  height: 70px;
+  height: 150px;
   padding: 15px 30px;
   margin-bottom: 10px;
   background-color: rgb(245, 245, 245);
   display: flex;
-  flex-direction: reverse;
-  align-items: start;
-  justify-content: flex-end;
+  flex-direction: column;
+  align-items: end;
+  justify-content: flex-start;
   border-radius: 20px;
-  gap: 20px;
+  gap: 10px;
 }
 select {
   height: 30px;
@@ -44,12 +53,12 @@ select {
   gap: 10px;
   align-items: center;
 }
+
 .q {
   height: 30px;
   border: none;
   padding-left: 10px;
   border-radius: 12px;
-  width: 250px;
   background-color: rgb(255, 255, 255);
   box-shadow: rgb(0, 0, 0, 0.2) 4px 4px 8px 0px, rgba(0, 0, 0, 0.03) -4px -4px 8px 1px;
 }
@@ -61,7 +70,7 @@ select {
 .backButton {
   height: 30px;
   border: none;
-  padding: 0px 10px 0px 60px;
+  padding: 0px 10px 0px 20px;
 
   border-radius: 12px;
   background-color: rgb(255, 255, 255);
@@ -70,7 +79,7 @@ select {
 #allEpisodesButton {
   position: absolute;
   left: calc(10vw + 30px);
-  top: 85px;
+  top: 165px;
 }
 
 #allEpisodesButton:hover {
@@ -83,7 +92,7 @@ select {
 .countInfo {
   position: absolute;
   right: calc(10vw + 30px);
-  top: 85px;
+  top: 165px;
   padding: 5px 10px;
 
   border-radius: 12px;
@@ -204,13 +213,18 @@ main {
   width: fit-content;
   p {
     width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 8;
+    -webkit-box-orient: vertical;
   }
 }
 .imgShow {
   object-fit: cover;
   border-radius: 7px;
-  height: 400px;
-  width: 300px;
+  height: 100%;
+  width: 100%;
 }
 
 .imgEpisode {
@@ -257,48 +271,63 @@ span {
 }
 
 @media screen and (max-width: 1080px) {
-  header {
-    height: 105px;
-    flex-direction: column;
-    align-items: end;
-    justify-content: flex-start;
-    gap: 10px;
-  }
-  #countInfo {
-    top: 125px;
-  }
-  #allEpisodesButton {
-    top: 125px;
-  }
 }
 
-@media screen and (max-width: 720px) {
-  header {
-    padding-top: 55px;
-  }
-  #countInfo {
-    top: 165px;
-  }
-  #allEpisodesButton {
-    top: 165px;
-  }
-}
-
-@media screen and (max-width: 540px) {
+@media screen and (max-width: 800px) {
   body {
     margin: 10px 15px;
-  }
-  #countInfo {
-    top: 145px;
-    right: 45px;
-  }
-  #allEpisodesButton {
-    top: 145px;
-    left: 45px;
   }
   #titleLogo {
     position: absolute;
     left: 45px;
     top: 20px;
+  }
+  .countInfo {
+    top: 145px;
+    right: 45px;
+  }
+  #allEpisodesButton {
+    top: 145px;
+    left: 160px;
+  }
+  #allShowsButton {
+    position: absolute;
+    top: 145px;
+    left: 45px;
+  }
+  .cardShow {
+    flex-direction: column;
+  }
+  .contImageShow {
+    height: 100%;
+    width: 100%;
+  }
+  .imgShow {
+    border-radius: 15px;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  header {
+    height: 200px;
+    padding-top: 60px;
+  }
+  select {
+    width: calc(100vw - 90px);
+  }
+  .q {
+    width: calc(100vw - 100px);
+  }
+  .countInfo {
+    top: 195px;
+    right: 45px;
+  }
+  #allEpisodesButton {
+    top: 235px;
+    left: 160px;
+  }
+  #allShowsButton {
+    top: 235px;
+    left: 45px;
   }
 }

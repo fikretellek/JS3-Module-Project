@@ -13,6 +13,9 @@ function getShowsFetch() {
   fetch("https://api.tvmaze.com/shows ")
     .then((response) => response.json())
     .then((data) => {
+      let name = "";
+      data.map((show) => (show.name.length > name.length ? (name = show.name) : (name = name)));
+      console.log(name);
       generateShowOptions(sortShowsByName(data));
       updateAllShowCount(data);
 
@@ -229,6 +232,7 @@ function selectShowEvent(shows) {
   searchInputShow.value = "";
   searchInputEpisodes.value = "";
   select.value = "default";
+  resetSelectedShow();
 
   showSelect.value === "default" ? generateAllShows(shows) : getFetch(showSelect.value);
   modifyAllShowButton();
